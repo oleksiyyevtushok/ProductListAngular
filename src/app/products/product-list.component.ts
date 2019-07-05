@@ -2,15 +2,19 @@ import { Component, OnInit } from '@angular/core';
 import { IProduct } from './product';
 import { ProductService } from './product.service';
 @Component({
-  selector: 'pm-products',
   templateUrl: './product-list.component.html',
   styleUrls: ['./product-list.component.css'],
 })
 export class ProductListComponent implements OnInit {
   constructor(private productService: ProductService) {}
   ngOnInit(): void {
-    this.products = this.productService.getProducts();
-    this.filteredProducts = this.products;
+    this.productService.getProducts().subscribe(
+      products => {
+        this.products = products;
+        this.filteredProducts = this.products;
+      },
+      error => (this.errorMessage = <any>error),
+    );
   }
 
   showImage: boolean = false;
@@ -21,6 +25,7 @@ export class ProductListComponent implements OnInit {
   filteredProducts: IProduct[];
   pageTitle: string = 'Product List';
   _listFilter: string;
+  errorMessage: string;
 
   get listFilter(): string {
     return this._listFilter;

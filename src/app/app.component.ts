@@ -4,4 +4,6 @@ import { Component } from '@angular/core';
   selector: 'pm-root',
   templateUrl: './app.component.html',
 })
-export class AppComponent {}
+export class AppComponent {
+  pageTitle: string = 'List of goods';
+}
